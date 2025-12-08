@@ -1,6 +1,6 @@
 {
   "name": "@akshat1/patrika",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Patrika is a static site generator. It reads markdown files and generates a static website using a user supplied `renderToString(ContentItem, Patrika) => Promise<string | string[]>` function. Patrika is minimal and framework agnostic, meant to be used with your favorite front-end framework.",
   "main": "lib/index.js",
   "repository": "git@github.com:akshat1/patrika.git",
@@ -9,7 +9,7 @@
   "type": "module",
   "homepage": "https://www.akshatmedia.com/patrika",
   "publishConfig": {
-    "registry": "https://warehouse.akshatmedia.com/"
+    "registry": "https://npm.pkg.github.com"
   },
   "bin": {
     "patrika": "./bin/patrika.js"
