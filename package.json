@@ -24,7 +24,7 @@
     "test": "node --test lib/**/*.test.js"
   },
   "dependencies": {
-    "@akshat1/js-logger": "^2.0.2",
+    "@akshat1/js-logger": "^3.0.0",
     "command-line-args": "^6.0.0",
     "command-line-usage": "^7.0.3",
     "express": "^4.19.2",
