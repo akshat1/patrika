@@ -6,3 +6,4 @@ coverage/
 # Don't Try to commit packed packages.
 *.tgz
 yarn-error.log
+.npmrc
