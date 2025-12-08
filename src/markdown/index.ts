@@ -6,8 +6,8 @@ import { OnShortCode } from "./extensions/OnShortCode.js";
 import { getExtensions } from "./extensions/index.js";
 
 interface RenderAllMarkdownArgs {
-  db: PicoDB<ContentItem>;
-  patrika: Patrika;
+  db          : PicoDB<ContentItem>;
+  patrika     : Patrika;
   onShortCode?: OnShortCode;
 }
 
@@ -27,7 +27,7 @@ export const renderAllMarkdown = async (args: RenderAllMarkdownArgs): Promise<vo
   if (typeof onShortCode === "function") {
     marked.use({ extensions: getExtensions() });
     marked.use({
-      async: true,
+      async     : true,
       walkTokens: async (token) => {
         if (token.type === "P:I") {
           token.html = await onShortCode(token.args, patrika);

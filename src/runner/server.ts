@@ -1,5 +1,5 @@
-import fs from "node:fs/promises";
-import path from "node:path";
+import { promises as fs } from "node:fs";
+import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import { getLogger } from "@akshat1/js-logger";
 import express, { RequestHandler } from "express";
@@ -23,11 +23,11 @@ const getClientScriptAddition = async (): Promise<string> => {
   const __dirname = path.dirname(__filename);
   const clientScriptPath = path.join(__dirname, "../..", "assets", "client-script.js");
   try {
-    scriptTextAddition = 
+    scriptTextAddition =
       `<script>${(await fs.readFile(clientScriptPath)).toString("utf-8")}</script></body>`
-      .replace("$$__PORT__$$", ServerConf.port);
+        .replace("$$__PORT__$$", ServerConf.port);
 
-  return scriptTextAddition;
+    return scriptTextAddition;
   } catch (err) {
     getLogger("getClientScriptAddition").error("Error reading client script:", err);
     return `<!-- Patrika Runner encountered error reading live-reload client script. ${err.message} -->\n</body>`;
@@ -63,7 +63,7 @@ export const getContentType = (filePath: string): string => {
 
 interface ContentResponse {
   contentType: string;
-  content: Buffer|string;
+  content    : Buffer | string;
 }
 
 const getContent = async (reqPath: string): Promise<ContentResponse> => {
@@ -76,8 +76,8 @@ const getContent = async (reqPath: string): Promise<ContentResponse> => {
     stat = await fs.stat(filePath);
     if (!stat.isFile()) {
       const error = new Error(`ENOENT: no such file or directory, open '${filePath}'`);
-      /// @ts-ignore
-      error.code = "ENOENT";
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (error as any).code = "ENOENT";
       throw error;
     }
   }
@@ -85,7 +85,7 @@ const getContent = async (reqPath: string): Promise<ContentResponse> => {
   logger.debug(`Reading: ${reqPath} => ${filePath}`);
   const response: ContentResponse = {
     contentType: getContentType(filePath),
-    content: await fs.readFile(filePath),
+    content    : await fs.readFile(filePath),
   };
 
   if (path.extname(filePath) === ".html") {
@@ -98,7 +98,7 @@ const getContent = async (reqPath: string): Promise<ContentResponse> => {
 
   logger.debug("Returning buffer.");
   return response;
-}
+};
 
 const staticServer: RequestHandler = async (req, res, next) => {
   // A lot of code here is borrowed from serve-static.
@@ -119,7 +119,7 @@ const staticServer: RequestHandler = async (req, res, next) => {
     try {
       const {
         contentType,
-        content: responseBody
+        content: responseBody,
       } = await getContent(pathName);
       logger.debug("Sending response with content-type", getContentType(pathName));
       res.setHeader("Content-Type", contentType);

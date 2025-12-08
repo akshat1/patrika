@@ -17,19 +17,19 @@ export const copyStaticAssets = async (config: RunnerConfiguration) => {
     logger.debug("Copying", srcPath, "to", destPath);
     await fs.cp(srcPath, destPath, {
       recursive: true,
-      force: true,
+      force    : true,
     });
   }
     
-    // staticAssets.map(async (staticAsset) => {
-    //   const src = path.join(process.cwd(), staticAsset);
-    //   const dest = path.join(outDir, staticAsset);
-    //   logger.debug("Copying", src, "to", dest);
-    //   await fs.cp(src, dest, {
-    //     recursive: true,
-    //     force: true,
-    //   });
-    // })
+  // staticAssets.map(async (staticAsset) => {
+  //   const src = path.join(process.cwd(), staticAsset);
+  //   const dest = path.join(outDir, staticAsset);
+  //   logger.debug("Copying", src, "to", dest);
+  //   await fs.cp(src, dest, {
+  //     recursive: true,
+  //     force: true,
+  //   });
+  // })
 
   logger.debug("Done copying static assets.");
-}
+};

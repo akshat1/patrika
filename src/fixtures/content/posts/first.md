@@ -5,6 +5,7 @@ authors:
 title: The first post.
 description: The first post of the test blog.
 publishDate: 2024-01-01
+type: post
 ---
 
 Phasellus blandit orci sed lacus cursus, ut dictum urna congue. Quisque massa turpis, scelerisque at lacinia vitae, porttitor nec arcu. Nulla ullamcorper cursus libero, et tempus felis interdum ut. Donec pharetra, neque ut mollis dictum, nisl ex dignissim felis, eu consectetur orci purus non urna. Donec in sagittis nisl, venenatis consequat libero. Sed malesuada aliquet sollicitudin. Fusce ullamcorper faucibus libero, vel faucibus urna consectetur ut. Morbi et fermentum magna. Ut bibendum ipsum eget sodales congue. Donec quis varius risus. Nulla nec commodo ante. Proin nec elit enim.

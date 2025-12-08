@@ -5,6 +5,7 @@ authors:
 title: Post archive.
 description: All my circuits. I mean posts.
 publishDate: 2024-02-15
+type: page
 ---
 
 # Posts archive

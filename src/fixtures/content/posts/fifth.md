@@ -5,6 +5,7 @@ authors:
 title: The fifth post.
 description: The fifth post of the test blog.
 publishDate: 2024-01-05
+type: post
 ---
 
 Donec ullamcorper congue dictum. Aliquam maximus mattis dolor, sit amet cursus velit rutrum porta. Ut venenatis ultricies gravida. Nam volutpat tellus ut eros vulputate porttitor. Nulla feugiat ultricies dolor commodo pretium. Phasellus tincidunt tellus nisi, eu gravida nulla posuere ac. Fusce justo justo, bibendum a vestibulum eu, suscipit in nisl. Proin eget nulla pellentesque, scelerisque augue et, semper tortor. Curabitur consequat tellus et dignissim convallis. Praesent congue nulla id risus euismod fringilla eget ac justo. Fusce finibus orci metus, ut bibendum ante tristique eget. In hac habitasse platea dictumst. Sed eu ultrices risus. Vestibulum consectetur ex eros, et venenatis ligula eleifend quis.

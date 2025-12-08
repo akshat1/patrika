@@ -1,15 +1,15 @@
 export interface RunnerConfiguration {
   /** Something like mySiteContent\/**\/*.md */
-  contentGlob: string;
+  contentGlob : string;
   /** @deprecated */
-  lessDir: string;
-  outDir: string;
+  lessDir     : string;
+  outDir      : string;
   /**
    * Any and all static assets that should be copied over as is.
    * A dict which with source path as key and destination path as value.
    * The source path should be relative to the project root, and the destination path should be relative to the output
    * directory.
-   * 
+   *
    * @example
    * {
    *  "src/styles": "styles",   // Copy all files from src/styles to outDir/styles

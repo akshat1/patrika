@@ -8,12 +8,13 @@
    This is a barebones version, doesn't have things like max-delay etc. but I
    don't need that and this works well enough for me.
 */
-/* eslint-disable @typescript-eslint/ban-types */
 /**
  * @param fn - The function be debounced.
  * @param delayMS - Delay in milliseconds. Zero by default (so at the end of current call stack).
- * @returns 
+ * @returns
  */
+// Whooooooooo! Unsafe function type! Scaaaaaryyyyyyy! Oooooh JavaScript! Mysterious!
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export function debounce (fn: Function, delayMS: number = 0) {
   let timeout;
   return (...args) => {

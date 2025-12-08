@@ -22,7 +22,7 @@ const loadTemplate = async (templatePath: string, terminate?: boolean): Promise<
   } catch (err) {
     if (!terminate) {
       logger.debug("Retry, might be a file path. Try with process.cwd()");
-      return loadTemplate(path.join(workerData.cwd, templatePath), true)
+      return loadTemplate(path.join(workerData.cwd, templatePath), true);
     }
 
     logger.error(err);
@@ -50,7 +50,7 @@ const workerMain = async () => {
     contentGlob,
     outDir,
     lessDir,
-  } = conf
+  } = conf;
 
   logger.debug("Get Patrika instance.");
   const patrika = await getPatrika({

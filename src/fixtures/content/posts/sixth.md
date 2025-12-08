@@ -5,6 +5,7 @@ authors:
 title: The sixth post.
 description: The sixth post of the test blog.
 publishDate: 2024-01-06
+type: post
 ---
 
 Fusce sagittis porta lectus, eu suscipit mi congue eget. Phasellus a fermentum ipsum, aliquet pellentesque risus. Suspendisse hendrerit sit amet lectus eu dictum. Duis a ullamcorper lacus. Aenean sed justo nec mauris luctus pellentesque vitae ut risus. Nunc dapibus lectus et ornare commodo. Curabitur lacus arcu, tincidunt et volutpat a, dignissim vel ligula. Etiam maximus ex tortor, efficitur viverra tellus porta sit amet. Donec ac ligula arcu.

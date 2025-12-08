@@ -1,3 +1,4 @@
+/* eslint-disable */
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Client script loaded");
   const socket = new WebSocket("ws://localhost:$$__PORT__$$");
@@ -13,3 +14,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+/* eslint-enable */

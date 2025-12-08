@@ -1,25 +1,27 @@
-import assert from "assert";
+import * as assert from "node:assert";
 import { test, suite } from "node:test";
 import { FrontMatterResult } from "front-matter";
-import { ContentItem, getPublishDate, toContentItem, ToContentItemArgs , comparePostsByPublishedDate } from "./ContentItem";
+import {
+  ContentItem, getPublishDate, toContentItem, ToContentItemArgs, comparePostsByPublishedDate,
+} from "./ContentItem";
 import { FrontMatterAttributes } from "./front-matter";
 
 suite("ContentItem", () => {
   suite("comparePostsByPublishedDate", () => {
     const FakeItemStub: ContentItem = {
-      authors: [],
-      body: "",
+      authors    : [],
+      body       : "",
       collections: [],
-      draft: false,
-      excerpt: {},
-      /// @ts-ignore
+      draft      : false,
+      excerpt    : {},
+      /// @ts-expect-error - I JUST NEED A STUB FOR THE TEST!
       frontMatter: {},
-      id: "",
-      markdown: "",
+      id         : "",
+      markdown   : "",
       publishDate: new Date(),
-      slug: "",
-      tags: [],
-      title: "",
+      slug       : "",
+      tags       : [],
+      title      : "",
     };
     const makeFakeItem = (publishDate: string): ContentItem => ({
       ...FakeItemStub,
@@ -48,37 +50,37 @@ suite("ContentItem", () => {
   suite("getPublishDate", () => {
     test("should return the date from front matter attributes when present", () => {
       const args = {
-        attributes: { publishDate: "2020-03-02" },
-        stats: { ctime: new Date("2021-01-01").toUTCString() },
+        attributes: { publishDate: new Date("2020-03-02") },
+        stats     : { ctime: new Date("2021-01-01").toUTCString() },
       };
       /// @ts-expect-error Not going to create a full fs.Stats object for the test :-|
       const actualDate = getPublishDate(args);
-      assert.equal(actualDate, "2020-03-02");
+      assert.equal(actualDate?.toISOString(), new Date("2020-03-02").toISOString());
     });
 
     test("should return the date from file states when missing from attributes", () => {
       const args = {
         attributes: {},
-        stats: { ctime: new Date("2021-01-01").toUTCString() },
+        stats     : { ctime: new Date("2021-01-01").toUTCString() },
       };
       /// @ts-expect-error Not going to create a full fs.Stats object for the test :-|
       const actualDate = getPublishDate(args);
-      assert.equal(actualDate, "2021-01-01");
+      assert.equal(actualDate?.toISOString(), new Date("2021-01-01").toISOString());
     });
 
     test("should return null when published date is missing from attributes, and ctime is missing from stats", () => {
       const args = {
         attributes: {},
-        stats: {},
+        stats     : {},
       };
       /// @ts-expect-error Not going to create a full fs.Stats object for the test :-|
       const actualDate = getPublishDate(args);
-      assert.equal(actualDate, null);
+      assert.equal(actualDate?.toISOString(), null);
     });
   });
 
   suite("toContentItem", () => {
-    test("should return a well formed ContentItem", () => {
+    test("should return a well formed ContentItem", async () => {
       const authors = ["foo", "bar"];
       const id = "post-42";
       const publishDate = new Date("2023-01-01");
@@ -97,37 +99,44 @@ suite("ContentItem", () => {
         image,
         imgAlt,
         tags,
+        type : "post",
       };
       const frontMatter: FrontMatterResult<FrontMatterAttributes> = {
-        attributes: fmAttributes,
-        body: "ze markdown",
-        bodyBegin: 0,
+        attributes : fmAttributes,
+        body       : "ze markdown",
+        bodyBegin  : 0,
         frontmatter: "all ze frontmatter",
       };
       const contentItemArgs: ToContentItemArgs = {
-        filePath: "foo/bar/baz.md",
-        fmData: frontMatter,
-        getSlug: () => "jabba-the-hut",
+        filePath            : "foo/bar/baz.md",
+        fmData              : frontMatter,
+        getSlug             : () => "jabba-the-hut",
+        getURLRelativeToRoot: () => "/",
+        outDir              : "/",
         /// @ts-expect-error We don't want to create an entire fs.Stat object.
-        stats: {},
+        stats               : {},
       };
 
       const expectedItem = {
+        sourceFilePath: undefined,
+        filePath      : "/",
+        url           : "/",
         authors,
         collections,
-        draft: false,
-        frontMatter: fmAttributes,
+        draft         : false,
+        frontMatter   : fmAttributes,
         id,
-        markdown: "ze markdown",
+        markdown      : "ze markdown",
         publishDate,
-        slug: "jabba-the-hut",
+        slug          : "jabba-the-hut",
         tags,
         title,
         image,
         imgAlt,
-        excerpt: {},
+        excerpt       : {},
+        type          : "post",
       };
-      const actualItem = toContentItem(contentItemArgs);
+      const actualItem = await toContentItem(contentItemArgs);
       assert.deepEqual(actualItem, expectedItem);
     });
   });

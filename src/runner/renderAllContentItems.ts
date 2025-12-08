@@ -8,8 +8,8 @@ import { ContentItem, Patrika } from "../index.js";
 const rootLogger = getLogger("renderAllContentItems");
 
 interface WriteHTMLFileArgs {
-  item: ContentItem;
-  strHTML: string;
+  item          : ContentItem;
+  strHTML       : string;
   outputFilePath: string;
 }
 const writeHTMLFile = async (args : WriteHTMLFileArgs) => {
@@ -27,11 +27,11 @@ const writeHTMLFile = async (args : WriteHTMLFileArgs) => {
 };
 
 interface RenderAllContentItemsArgs {
-  items: ContentItem[];
-  patrika: Patrika;
-  renderToString: RenderToString;
+  items               : ContentItem[];
+  patrika             : Patrika;
+  renderToString      : RenderToString;
   getURLRelativeToRoot: GetURLRelativeToRoot;
-  outDir: string;
+  outDir              : string;
 }
 export const renderAllContentItems = async (args: RenderAllContentItemsArgs) => {
   const logger = getLogger("implementation", rootLogger);

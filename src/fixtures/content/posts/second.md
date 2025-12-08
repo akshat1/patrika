@@ -5,6 +5,7 @@ authors:
 title: The second post.
 description: The second post of the test blog.
 publishDate: 2024-01-02
+type: post
 ---
 
 Phasellus convallis neque vel ornare cursus. Nulla suscipit tellus sed ipsum sodales hendrerit. Suspendisse rutrum, est non tristique suscipit, enim magna elementum mauris, interdum aliquam erat lacus vitae metus. Fusce rutrum aliquam tellus, id gravida quam imperdiet a. Pellentesque mattis tempus quam dignissim interdum. Sed dignissim purus id diam ornare, vel gravida ante feugiat. Mauris non iaculis nisi, id sollicitudin dolor. Praesent lectus ante, convallis quis lacus tempus, tincidunt pellentesque arcu. Maecenas varius nulla at nulla imperdiet, id sodales augue posuere. Sed quis velit maximus, aliquet nisi eu, efficitur dolor. Morbi convallis dapibus condimentum. Cras vehicula volutpat nisl, ac venenatis nibh imperdiet ut. Vestibulum in convallis neque. Aliquam lectus ex, sagittis et facilisis id, luctus eu urna. Donec porta quis urna finibus gravida.

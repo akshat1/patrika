@@ -1,7 +1,7 @@
 import { MarkedExtensionAsPerDocs } from "./MarkedExtensionAsPerDocs";
 import { SCToken } from "./SCToken";
 
-const StartPattern = /\S?\[P\:I[^\]]+\]/;
+const StartPattern = /\S?\[P:I[^\]]+\]/;
 /**
  * @param src The markdown source
  * @returns The next potential start of the custom token.
@@ -11,7 +11,7 @@ export const start = (src: string): number | void => {
   if (match && match[0] && match[0].startsWith("[P:I")) {
     return match.index;
   }
-}
+};
 
 const extractValues = (str: string): Record<string, unknown> => {
   // Thank you Copilot.
@@ -26,14 +26,14 @@ const extractValues = (str: string): Record<string, unknown> => {
       args[key] = parseFloat(numValue);
     } else if (strValue !== undefined) {
       args[key] = strValue
-        .replace(/\\"/g, '"')         // Turn escaped quotes into quotes.
+        .replace(/\\"/g, "\"")         // Turn escaped quotes into quotes.
         .replace(/(^")|("$)/g, "");   // Remove quotes from the start and end of the string.
     }
   }
   return args;
 };
 
-const TokenPattern = /^\[P\:I[^\]]+\]/;
+const TokenPattern = /^\[P:I[^\]]+\]/;
 /**
  * @param src The markdown source
  * @returns The custom token
@@ -46,13 +46,13 @@ export const tokenizer = (src: string): SCToken | void => {
 
     return {
       type: "P:I",
-      raw: tag,
+      raw : tag,
       text: tag,
       html: "",
       args,
     };
   }
-}
+};
 
 /**
  * Returns a Marked extension.
@@ -60,21 +60,21 @@ export const tokenizer = (src: string): SCToken | void => {
  * encounters our custom markdown tag, it will call the supplied onShortCode
  * function with the args and assign the result to the html property of the
  * token.
- * 
+ *
  * For example, given the following markdown:
  * I'm writing this [PSC foo="bar" baz='qux' ab=0 cd=true] with a custom
  * markdown tag.
- * 
+ *
  * The extension will call onShortCode with the args
  * { foo: "bar", baz: "qux", ab: 0, cd: true } and assign the result to the
  * html property of the token.
- * 
+ *
  * @see https://marked.js.org/using_pro#extensions
  */
 export const getExtension = (): MarkedExtensionAsPerDocs => ({
-  name: "P:I", // Patrika Inline
-  level: "inline",
-  async: true,
+  name    : "P:I", // Patrika Inline
+  level   : "inline",
+  async   : true,
   start,
   tokenizer,
   renderer: (token: SCToken) => token.html,

@@ -9,7 +9,7 @@ import less from "less";
  * @param lessDir - Absolute path to the directory containing less files
  * @param outDir  - Absolute path to the directory where css files will be written
  * @returns - Absolute path to the css file such that the directory structure is preserved.
- * 
+ *
  * @description
  * getDestinationPath("/myProj/foo/bar/baz.less", "/myProj/foo", "/out") -> "/out/bar/baz.css"
  */
@@ -18,7 +18,7 @@ export const getDestinationPath = (srcFile: string, lessDir: string, outDir: str
   const result = path.join(
     outDir,
     path.basename(lessDir),
-    path.relative(lessDir, srcFile).replace(/\.less$/, ".css")
+    path.relative(lessDir, srcFile).replace(/\.less$/, ".css"),
   );
 
   logger.debug({
@@ -28,7 +28,7 @@ export const getDestinationPath = (srcFile: string, lessDir: string, outDir: str
     result,
   });
   return result;
-}
+};
 
 export const buildLessFile = async (srcFile: string, lessDir: string, outDir: string) => {
   const logger = getLogger("buildLessFile");
@@ -51,7 +51,7 @@ export const buildLessFile = async (srcFile: string, lessDir: string, outDir: st
 
 interface BuildStyleArgs {
   lessDir: string;
-  outDir: string;
+  outDir : string;
 }
 
 export const buildStyle = async (args: BuildStyleArgs) => {

@@ -5,6 +5,7 @@ authors:
 title: The fourth post.
 description: The fourth post of the test blog.
 publishDate: 2024-01-04
+type: post
 ---
 
 # First paragraph

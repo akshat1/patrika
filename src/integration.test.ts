@@ -13,10 +13,10 @@ suite("getPatrika", () => {
 
   before(async () => {
     patrika = await getPatrika({
-      contentGlob: path.join(process.cwd(), "src", "fixtures", "content", "**", "*.md"),
+      contentGlob         : path.join(process.cwd(), "src", "fixtures", "content", "**", "*.md"),
       onShortCode,
-      outDir: "bar",
-      getSlug: () => "",
+      outDir              : "bar",
+      getSlug             : () => "",
       getURLRelativeToRoot: () => "",
     });
   });
@@ -24,12 +24,12 @@ suite("getPatrika", () => {
   test("onShortcode should be called when the shortcode is encountered.", async () => {
     // This is rather fragile test because only one of the files contains the shortcode at this
     // moment. If we ever add the shortcode to another file, this test will need to be updated.
-    assert.strictEqual(onShortCode.mock.callCount, 1);
+    assert.strictEqual(onShortCode.mock.calls.length, 1);
   });
 
   test("Item.body should include the return value from onShortCode", async () => {
     const item = (await patrika.find({ id: "fourth-one" }))[0];
-    assert.strictEqual(item.body?.includes('<span>OnShortCode Called With Args {"foo":"bar","baz":"qux"}</span>'), true);
+    assert.strictEqual(item.body?.includes("<span>OnShortCode Called With Args {\"foo\":\"bar\",\"baz\":\"qux\"}</span>"), true);
   });
 
   test("Patrika should expose the expected API", () => {

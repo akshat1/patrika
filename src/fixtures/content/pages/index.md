@@ -5,6 +5,7 @@ authors:
 title: Home
 description: Sample index page using content from lipsum.org.
 publishDate: 2024-02-15
+type: page
 ---
 
 # Lorem Ipsum

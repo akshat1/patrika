@@ -6,16 +6,8 @@
   "configurations": [{
     "name": "Debug tests",
     "request": "launch",
-    "runtimeArgs": ["run-script", "test"],
-    "runtimeExecutable": "yarn",
-    "skipFiles": ["<node_internals>/**"],
-    "type": "node",
-    "console": "integratedTerminal"
-  }, {
-    "name": "Debug Sanbox",
-    "request": "launch",
-    "runtimeArgs": ["sandbox"],
-    "runtimeExecutable": "yarn",
+    "runtimeArgs": ["test"],
+    "runtimeExecutable": "npm",
     "skipFiles": ["<node_internals>/**"],
     "type": "node",
     "console": "integratedTerminal"

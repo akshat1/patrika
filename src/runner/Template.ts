@@ -10,11 +10,11 @@ import { RunnerConfiguration } from "./RunnerConfiguration.js";
 import { getCommandLineOptions } from "./commandLineArgs.js";
 
 export interface Template {
-  renderToString: RenderToString;
-  getSlug: GetSlug;
-  getURLRelativeToRoot: GetURLRelativeToRoot;
-  getConfig: () => RunnerConfiguration;
-  onShortCode?: OnShortCode;
+  renderToString       : RenderToString;
+  getSlug              : GetSlug;
+  getURLRelativeToRoot : GetURLRelativeToRoot;
+  getConfig            : () => RunnerConfiguration;
+  onShortCode?         : OnShortCode;
   getExtraContentItems?: getExtraContentItems;
 };
 
@@ -69,7 +69,7 @@ const tryLoading = async (flushTemplate: boolean, templatePath: string, terminat
 /**
  * We expect this to only be called from the runner; i.e., when Patrika is used from the command line with a template.
  * This file is not involved when Patrika is used programmatically.
- * @returns 
+ * @returns
  */
 export const loadTemplate = async (flushTemplate?: boolean) => {
   const logger = getLogger("loadTemplate", rootLogger);

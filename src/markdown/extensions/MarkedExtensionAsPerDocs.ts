@@ -8,9 +8,9 @@ import { SCToken } from "./SCToken";
  * acceptable in this situation.
  */
 export interface MarkedExtensionAsPerDocs {
-  name: string;
+  name : string;
   level: "block" | "inline";
-  start(src: string, pos: number): number|void;
+  start(src: string, pos: number): number | void;
   async: boolean;
   tokenizer(src: string, tokens: SCToken[]): void;
   renderer(token: SCToken): string;

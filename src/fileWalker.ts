@@ -9,10 +9,10 @@ import { getFMData } from "./front-matter/index.js";
 const logger = getLogger("fileWalker");
 
 interface FileWalkerArgs {
-  getSlug: GetSlug;
+  getSlug             : GetSlug;
   getURLRelativeToRoot: GetURLRelativeToRoot;
-  outDir: string;
-  globPattern: string;
+  outDir              : string;
+  globPattern         : string;
 }
 export const fileWalker = async (args: FileWalkerArgs): Promise<ContentItem[]> => {
   const {

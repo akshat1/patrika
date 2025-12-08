@@ -5,6 +5,7 @@ authors:
   - Author One
 publishDate: 2024-2-15
 description: All about lorem ipsum.
+type: page
 ---
 
 # What is Lorem Ipsum?

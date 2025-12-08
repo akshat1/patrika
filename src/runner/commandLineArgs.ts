@@ -3,42 +3,42 @@ import commandLineUsage from "command-line-usage";
 
 interface CommandLineOptions {
   template: string;
-  help: boolean;
-  serve: boolean;
-  verbose: boolean;
-  version: boolean;
-  watch: boolean;
+  help    : boolean;
+  serve   : boolean;
+  verbose : boolean;
+  version : boolean;
+  watch   : boolean;
 }
 
 const clOptionDefinitions = [{
-  name: "help",
-  alias: "h",
-  type: Boolean,
+  name       : "help",
+  alias      : "h",
+  type       : Boolean,
   description: "Print this usage guide.",
 }, {
-  name: "template",
-  alias: "t",
-  type: String,
+  name       : "template",
+  alias      : "t",
+  type       : String,
   description: "Path to the template file.",
 }, {
-  name: "verbose",
-  alias: "v",
-  type: Boolean,
+  name       : "verbose",
+  alias      : "v",
+  type       : Boolean,
   description: "Not implemented yet; everything is verbose ATM.",
 }, {
-  name: "watch",
-  alias: "w",
-  type: Boolean,
+  name       : "watch",
+  alias      : "w",
+  type       : Boolean,
   description: "Watch for changes and rebuild.",
 }, {
-  name: "serve",
-  alias: "s",
-  type: Boolean,
+  name       : "serve",
+  alias      : "s",
+  type       : Boolean,
   description: "Start a live reloading server. This also implies --watch (and ocverrides any explicit value for it).",
 }, {
-  name: "version",
-  alias: "V",
-  type: Boolean,
+  name       : "version",
+  alias      : "V",
+  type       : Boolean,
   description: "Print the version of the runner.",
 }];
 
@@ -48,7 +48,7 @@ const getPackageJSON = async () => {
     return pkgJSON;
   }
 
-  /// @ts-ignore
+  /// @ts-expect-error - Calm down TS.
   pkgJSON = (await import("../../package.json", { with: { type: "json" } })).default;
   return pkgJSON;
 };
@@ -60,10 +60,10 @@ interface PrintUsageHelpArgs {
 export const printUsageHelp = async (args: PrintUsageHelpArgs = {}) => {
   const { errorMessage } = args;
   const sections: Record<string, unknown>[] = [{
-    header: "Patrika Runner",
+    header : "Patrika Runner",
     content: "A tool to turn your markdown and temmplates into a static website.",
   }, {
-    header: "Sample Usage",
+    header : "Sample Usage",
     content: "$ patrika-runner -t template/index.js",
   }, {
     content: "$ patrika-runner -t template/index.js -w",
@@ -73,16 +73,16 @@ export const printUsageHelp = async (args: PrintUsageHelpArgs = {}) => {
 
   if (errorMessage) {
     sections.push({
-      header: "Error",
+      header : "Error",
       content: errorMessage,
     });
   }
 
   sections.push({
-    header: "Options",
+    header    : "Options",
     optionList: clOptionDefinitions,
   }, {
-    header: "Project Information",
+    header : "Project Information",
     content: `Project home: ${(await getPackageJSON()).homepage}`,
   });
 
@@ -98,7 +98,7 @@ export const getCommandLineOptions = (): CommandLineOptions => {
 
   clOptions = commandLineArgs(clOptionDefinitions);
   return clOptions;
-}
+};
 
 /**
  * Validate the command line options. Display help or appropriate error messages and exit if needed.

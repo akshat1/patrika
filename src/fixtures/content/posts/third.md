@@ -5,6 +5,7 @@ authors:
 title: The third post.
 description: The third post of the test blog.
 publishDate: 2024-01-03
+type: post
 ---
 
 Suspendisse tempus consequat odio, id bibendum tellus venenatis et. Nunc placerat at nulla nec aliquet. Vestibulum commodo volutpat justo. Proin lectus purus, consectetur ut sem in, rhoncus ullamcorper lorem. Quisque ac ligula at felis sagittis mattis. Sed eget risus ultrices, maximus lorem quis, sollicitudin tellus. Etiam faucibus placerat metus, non fringilla odio condimentum nec. Phasellus eu massa quis elit auctor porta at porta erat.

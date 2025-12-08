@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { test, suite, } from "node:test";
+import { test, suite } from "node:test";
 import { start, tokenizer } from "./inline";
 
 suite("start", () => {
@@ -21,7 +21,7 @@ suite("tokenizer", () => {
     const token = tokenizer(src);
     assert.deepStrictEqual(token, {
       type: "P:I",
-      raw: src,
+      raw : src,
       text: src,
       html: "",
       args: {
@@ -36,11 +36,11 @@ suite("tokenizer", () => {
   });
 
   test("should correctly parse parameter values with various characters", () => {
-    const src = '[P:I pa="postLink" pb="string-with-dashes" pc="string with escaped \\" quotes" pd=2 pe=3.14 pf=true pg=false]';
+    const src = "[P:I pa=\"postLink\" pb=\"string-with-dashes\" pc=\"string with escaped \\\" quotes\" pd=2 pe=3.14 pf=true pg=false]";
     const token = tokenizer(src);
     assert.deepStrictEqual(token, {
       type: "P:I",
-      raw: src,
+      raw : src,
       text: src,
       html: "",
       args: {

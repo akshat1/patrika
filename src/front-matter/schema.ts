@@ -17,17 +17,18 @@
  * The front-matter attributes extracted from a markdown file.
  */
 export interface FrontMatterAttributes extends Record<string, unknown> {
-  id: string;
-  title: string;
+  id         : string;
+  title      : string;
   publishDate: Date;
-  draft?: boolean;
+  type?      : string;
+  draft?     : boolean;
 }
 
 type ValidatorFunc = (obj: FrontMatterAttributes) => boolean;
 type Schema = Record<string, ValidatorFunc>;
 const FMDataSchema: Schema = {
-  id: obj => typeof obj.id === "string",
-  title: obj => typeof obj.title === "string",
+  id         : obj => typeof obj.id === "string",
+  title      : obj => typeof obj.title === "string",
   publishDate: obj => obj.publishDate instanceof Date,
 };
 
@@ -58,7 +59,7 @@ export const validate = (data: FrontMatterAttributes): string[] =>
    * This is optional because the body is generated in another pass and we need
    * to account for a half-baked ContentItem, one without a body. Ideally we
    * should use a partial type here so that the exposed API is consistent.
-   * 
+   *
    * @TODO Use a partial type here instead of making `body` optional.
    * /
   body?: string;

@@ -9,7 +9,6 @@ declare module "picodb" {
     toArray: () => Promise<DocumentType[]>;
   }
 
-  // eslint-disable-next-line import/no-default-export
   export default class PicoDB<DocumentType> {
     constructor ();
     count: () => Promise<number>;
