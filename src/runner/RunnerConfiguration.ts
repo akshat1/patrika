@@ -1,8 +1,6 @@
 export interface RunnerConfiguration {
   /** Something like mySiteContent\/**\/*.md */
   contentGlob : string;
-  /** @deprecated */
-  lessDir     : string;
   outDir      : string;
   /**
    * Any and all static assets that should be copied over as is.
