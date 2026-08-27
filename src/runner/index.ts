@@ -21,7 +21,7 @@ export const main = async () => {
   if (clOptions.serve) {
     logger.info("Start live server...");
     const { startServer } = await import("./server.js"); // Only load the server if required.
-    signalReload = await startServer(conf);
+    signalReload = await startServer(conf, clOptions.port);
   }
 
   if (clOptions.serve || clOptions.watch) {

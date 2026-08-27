@@ -8,24 +8,21 @@ import parseurl from "parseurl";
 import { RunnerConfiguration } from "./RunnerConfiguration";
 
 let runnerConfig: RunnerConfiguration;
-
-const ServerConf = {
-  port: "3000",
-};
+let serverPort: number;
 
 let scriptTextAddition = "";
 const getClientScriptAddition = async (): Promise<string> => {
   if (scriptTextAddition) {
     return scriptTextAddition;
   }
-  
+
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const clientScriptPath = path.join(__dirname, "../..", "assets", "client-script.js");
   try {
     scriptTextAddition =
       `<script>${(await fs.readFile(clientScriptPath)).toString("utf-8")}</script></body>`
-        .replace("$$__PORT__$$", ServerConf.port);
+        .replace("$$__PORT__$$", String(serverPort));
 
     return scriptTextAddition;
   } catch (err) {
@@ -146,14 +143,14 @@ const staticServer: RequestHandler = async (req, res, next) => {
 
 type SignalReloadCB = () => void;
 
-export const startServer = async (conf: RunnerConfiguration): Promise<SignalReloadCB> => {
+export const startServer = async (conf: RunnerConfiguration, port: number): Promise<SignalReloadCB> => {
   const logger = getLogger("startServer");
   runnerConfig = conf;
+  serverPort = port;
   logger.info("Starting server...");
   // Build everything
   // Start the server
   const app = express();
-  const port = ServerConf.port;
   const expressWSS = ExpressWS(app);
 
   // Add our static server
@@ -169,9 +166,22 @@ export const startServer = async (conf: RunnerConfiguration): Promise<SignalRelo
   });
 
   // Start the server
-  app.listen(port, () => {
+  // The listen error surfaces on the WebSocketServer (express-ws wires the http server into it), so handle it on both.
+  const onListenError = (err: NodeJS.ErrnoException) => {
+    if (err.code === "EADDRINUSE") {
+      console.error(`Port ${port} is already in use. Pass --port to choose a different one.`);
+      process.exit(1);
+    }
+
+    logger.error("Server error:", err);
+    console.error(err);
+    process.exit(1);
+  };
+  expressWSS.getWss().on("error", onListenError);
+  const server = app.listen(port, () => {
     logger.info(`Server listening at http://localhost:${port}`);
   });
+  server.on("error", onListenError);
 
   return () => {
     logger.info("Asked to signal reload...");

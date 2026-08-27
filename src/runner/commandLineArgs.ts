@@ -4,11 +4,14 @@ import commandLineUsage from "command-line-usage";
 interface CommandLineOptions {
   template: string;
   help    : boolean;
+  port    : number;
   serve   : boolean;
   verbose : boolean;
   version : boolean;
   watch   : boolean;
 }
+
+export const DefaultPort = 3000;
 
 const clOptionDefinitions = [{
   name       : "help",
@@ -35,6 +38,12 @@ const clOptionDefinitions = [{
   alias      : "s",
   type       : Boolean,
   description: "Start a live reloading server. This also implies --watch (and ocverrides any explicit value for it).",
+}, {
+  name        : "port",
+  alias       : "p",
+  type        : Number,
+  defaultValue: DefaultPort,
+  description : `Port for the live reloading server (only meaningful with --serve). Defaults to ${DefaultPort}.`,
 }, {
   name       : "version",
   alias      : "V",
@@ -118,6 +127,11 @@ export const doCommandLineValidation = async () => {
 
   if (!clOptions.template) {
     await printUsageHelp({ errorMessage: "Template path is required." });
+    process.exit(1);
+  }
+
+  if (!Number.isInteger(clOptions.port) || clOptions.port < 1 || clOptions.port > 65535) {
+    await printUsageHelp({ errorMessage: `Invalid port "${clOptions.port}". Expected an integer between 1 and 65535.` });
     process.exit(1);
   }
 };
