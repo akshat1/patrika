@@ -44,9 +44,11 @@ import { renderToString } from "./renderer/index.js";
 const config: RunnerConfiguration = {
   "watchedPaths": ["template", "content", "src/styles"],
   "outDir": "_site",
-  "template": "template/index.js",
   "lessDir": "src/styles/",
   "contentGlob": "content/**/*.md",
+  "staticAssets": {
+    "src/images": "images", // Copy all files from src/images to _site/images
+  },
 };
 
 const getSlug = ({ sourceFilePath, title }: ContentItem) => slugify((title ?? path.basename(sourceFilePath).replace(/\.md$/, ""))).toLowerCase();
@@ -114,7 +116,7 @@ export const renderToString = async (item: ContentItem, patrika: Patrika) =>
 Patrika provides two mechanisms to enable live development:
 
 1. Watch mode through the `--watch or -w` flag: In this mode, any changes made to the watchedPaths mentioned in the runner configuration trigger a rebuild.
-2. Serve mode through the `--server or -s` flag: In this mode, Patrika watches for changes (same as watch mode) but also runs a minimal, live reloading webserver at http://localhost:3000.
+2. Serve mode through the `--serve or -s` flag: In this mode, Patrika watches for changes (same as watch mode) but also runs a minimal, live reloading webserver at http://localhost:3000. Use the `--port or -p` flag to serve on a different port (e.g. `npx patrika -t template/index.js -s -p 8080`).
 
 ### Headless CMS
 
@@ -124,25 +126,25 @@ Here's a simple example of using Patrika as a headless CMS.
 
 ```ts
 import express from "express";
-import { getPatrika, ContentItemType } from "@akshat1/patrika";
+import { getPatrika } from "@akshat1/patrika";
 
-const getSlug = ({ filePath, attributes }) =>
-  (attributes?.title ?? slugify(path.basename(filePath).replace(/\.md$/, ""))).toLowerCase();
+const getSlug = ({ sourceFilePath, title }) =>
+  slugify(title ?? path.basename(sourceFilePath).replace(/\.md$/, "")).toLowerCase();
 const patrika = await getPatrika({
-  pagesGlob: "contentDir/pages/**/*.md",
-  postsGlob: "contentDir/posts/**/*.md",
+  contentGlob: "contentDir/**/*.md",
+  outDir: "_site",
   getSlug,
+  getURLRelativeToRoot: (item) => `${item.slug}.html`,
 });
 
 const app = express();
 app.get("/posts", async (req, res) => {
-  const allPosts = await patrika.find({ type: ContentItemType.Post });
+  const allPosts = await patrika.find({ type: "post" });
   res.send(allPosts);
 });
 
 app.get("/post/:postId", async (req, res) => {
   const post = (await patrika.find({
-    type: ContentItemType.Post,
     id: req.params.postId,
   }))[0];
   res.send(post);
@@ -155,17 +157,15 @@ The details for this would depend on the SSG in question, but it would be simila
 
 ## Requirements
 
-Patrika expects the following [FrontMatter](https://frontmatter.codes/docs/markdown) data in each markdown file. It is fine to include more data in the attributes, but Patrika will throw an error if any of the required fields are missing.
+Patrika expects the following [FrontMatter](https://frontmatter.codes/docs/markdown) data in each markdown file. It is fine to include more data in the attributes, but Patrika will throw an error if any of the required fields (`id`, `title`, `publishDate`) are missing.
 
 ```ts
-export interface FrontMatterAttributes {
-  id: string;
-  authors: string[];
-  collections?: string[];
-  draft?: boolean;
-  tags?: string[];
-  title: string;
-  publishDate: string | null;
+export interface FrontMatterAttributes extends Record<string, unknown> {
+  id         : string;
+  title      : string;
+  publishDate: Date;
+  type?      : string;
+  draft?     : boolean;
 }
 ```
 
@@ -183,20 +183,22 @@ Our author Adam Smith has written [P:I tagName="author-data" authorID="adam-smit
 
 ```js
 const patrika = await getPatrika({
-  pagesGlob: path.join("content", "pages", "**", "*.md"),
-  postsGlob: path.join("content", "posts", "**", "*.md"),
-  getSlug: ({ filePath, fmData }) => fmData.attributes.title || slugify(path.basename(filePath).replace(/\.md$/, "")),
-  onShortCode: async (args) => {
+  contentGlob: path.join("content", "**", "*.md"),
+  outDir: "_site",
+  getSlug: ({ sourceFilePath, title }) => slugify(title ?? path.basename(sourceFilePath).replace(/\.md$/, "")).toLowerCase(),
+  getURLRelativeToRoot: (item) => `${item.slug}.html`,
+  // Use the patrika instance passed to the handler; the `patrika` const above is not
+  // yet initialized when shortcodes are rendered during the getPatrika call itself.
+  onShortCode: async (args, patrika) => {
     switch (args.tagName) {
       case "author-data": {
         switch (args.requested) {
-          "post-count": return (await patrika.find({ authors: args.authorID }) ).length;
-          "picture": return (await fetch(`${authorPictureService}/${args.authorID}`));
-          // ....
-          // Potential other data attributes
-        },
-        // Potential other tags.
+          case "post-count": return String((await patrika.find({ authors: args.authorID })).length);
+          case "picture": return await (await fetch(`${authorPictureService}/${args.authorID}`)).text();
+          // Potential other data attributes.
+        }
       }
+      // Potential other tags.
     }
   },
 });
