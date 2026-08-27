@@ -3,7 +3,6 @@ import { parentPort, workerData } from "node:worker_threads";
 import { getLogger } from "@akshat1/js-logger";
 import { getPatrika } from "../index.js";
 import { Template } from "./Template.js";
-import { buildStyle } from "./buildStyle.js";
 import { copyStaticAssets } from "./copyStaticAssets.js";
 import { renderAllContentItems } from "./renderAllContentItems.js";
 
@@ -49,7 +48,6 @@ const workerMain = async () => {
   const {
     contentGlob,
     outDir,
-    lessDir,
   } = conf;
 
   logger.debug("Get Patrika instance.");
@@ -65,10 +63,6 @@ const workerMain = async () => {
   logger.debug("Build everything...");
   await Promise.all([
     copyStaticAssets(conf),
-    buildStyle({
-      outDir,
-      lessDir,
-    }),
     renderAllContentItems({
       getURLRelativeToRoot,
       items: await patrika.find(),

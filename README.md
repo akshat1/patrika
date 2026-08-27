@@ -44,10 +44,10 @@ import { renderToString } from "./renderer/index.js";
 const config: RunnerConfiguration = {
   "watchedPaths": ["template", "content", "src/styles"],
   "outDir": "_site",
-  "lessDir": "src/styles/",
   "contentGlob": "content/**/*.md",
   "staticAssets": {
     "src/images": "images", // Copy all files from src/images to _site/images
+    "src/styles": "styles", // Ship your CSS the same way
   },
 };
 
@@ -109,7 +109,9 @@ export const renderToString = async (item: ContentItem, patrika: Patrika) =>
 
 #### What about CSS?
 
-**:SUBJECT TO CHANGE:** Patrika currently supports building `.less` files through the `lessDir` property in the runner configuration, but this is likely to go away. Ideally, we want to be agnostic towards CSS compilation similar to how we are agnostic towards frontend frameworks. We'll either have a `toCSS` callback, or perhaps do away with CSS entirely (we'll expect the user to rig up CSS compilation separately). You are advised to not rely on Patrika for buidling CSS at this time.
+Patrika is agnostic towards CSS the same way it is agnostic towards frontend frameworks: bring your own. Write plain CSS and ship it via `staticAssets`, or run your preprocessor / bundler of choice as a separate step and point `staticAssets` at its output directory. Add your styles directory to `watchedPaths` if you want changes to it to trigger a rebuild in watch/serve mode.
+
+(Earlier versions compiled `.less` files via a `lessDir` configuration property; that has been removed.)
 
 #### Live development?
 
