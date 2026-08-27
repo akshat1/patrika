@@ -25,9 +25,20 @@ $ cd my-personal-website
 $ mkdir content                # All your markdown content goes into this directory
 $ mkdir src                    # Your template goes into this directory
 $ touch src/index.js
-$ echo "@akshat1:registry=https://warehouse.akshatmedia.com" >> .npmrc
+$ echo "@akshat1:registry=https://npm.pkg.github.com" >> .npmrc
 $ npm init
-$ npm i -d @akshat1/patrika
+$ npm i -D @akshat1/patrika
+```
+
+Patrika is published to the GitHub Packages npm registry, which requires authentication even for public packages. If the install fails with a 401, [create a GitHub personal access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages) with the `read:packages` scope and add it to your `~/.npmrc`:
+
+```ini
+//npm.pkg.github.com/:_authToken=YOUR_TOKEN
+```
+
+Then run Patrika with your template:
+
+```sh
 $ npx patrika -t src/index.js
 ```
 
