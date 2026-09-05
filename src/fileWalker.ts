@@ -1,5 +1,5 @@
 import fs from "node:fs/promises";
-import { getLogger } from "@akshat1/js-logger";
+import { getLogger } from "@kabukisolutions/js-logger";
 import { glob } from "glob";
 import { ContentItem, toContentItem } from "./ContentItem.js";
 import { GetSlug } from "./GetSlug.js";

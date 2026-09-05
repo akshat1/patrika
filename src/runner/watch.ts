@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { getLogger } from "@akshat1/js-logger";
+import { getLogger } from "@kabukisolutions/js-logger";
 
 const logger = getLogger("watch");
 /**

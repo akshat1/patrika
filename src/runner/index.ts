@@ -1,4 +1,4 @@
-import { getLogger } from "@akshat1/js-logger";
+import { getLogger } from "@kabukisolutions/js-logger";
 import { loadTemplate } from "./Template.js";
 import { build } from "./build.js";
 import { doCommandLineValidation, getCommandLineOptions } from "./commandLineArgs.js";

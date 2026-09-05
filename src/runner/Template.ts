@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
 import path from "node:path";
-import { getLogger } from "@akshat1/js-logger";
+import { getLogger } from "@kabukisolutions/js-logger";
 import { getExtraContentItems } from "../GetExtraContentItems.js";
 import { GetSlug } from "../GetSlug.js";
 import { GetURLRelativeToRoot } from "../GetURLRelativeToRoot.js";

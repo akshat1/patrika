@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { getLogger } from "@akshat1/js-logger";
+import { getLogger } from "@kabukisolutions/js-logger";
 import { GetURLRelativeToRoot } from "../GetURLRelativeToRoot.js";
 import { RenderToString } from "../RenderToString.js";
 import { ContentItem, Patrika } from "../index.js";

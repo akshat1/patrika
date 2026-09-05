@@ -1,6 +1,6 @@
 import path from "node:path";
 import { parentPort, workerData } from "node:worker_threads";
-import { getLogger } from "@akshat1/js-logger";
+import { getLogger } from "@kabukisolutions/js-logger";
 import { getPatrika } from "../index.js";
 import { Template } from "./Template.js";
 import { copyStaticAssets } from "./copyStaticAssets.js";

@@ -1,6 +1,6 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { getLogger } from "@akshat1/js-logger";
+import { getLogger } from "@kabukisolutions/js-logger";
 import { RunnerConfiguration } from "./RunnerConfiguration";
 
 export const copyStaticAssets = async (config: RunnerConfiguration) => {

@@ -1,4 +1,4 @@
-import { getLogger } from "@akshat1/js-logger";
+import { getLogger } from "@kabukisolutions/js-logger";
 import PicoDB from "picodb";
 import { type ContentItem } from "./ContentItem.js";
 import { getExtraContentItems } from "./GetExtraContentItems.js";
