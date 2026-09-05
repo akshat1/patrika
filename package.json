@@ -1,6 +1,6 @@
 {
   "name": "@akshat1/patrika",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "Patrika is a static site generator. It reads markdown files and generates a static website using a user supplied `renderToString(ContentItem, Patrika) => Promise<string | string[]>` function. Patrika is minimal and framework agnostic, meant to be used with your favorite front-end framework.",
   "main": "lib/index.js",
   "files": [
@@ -45,7 +45,6 @@
     "express-ws": "^5.0.2",
     "front-matter": "^4.0.2",
     "glob": "^13.0.0",
-    "less": "^4.4.2",
     "marked": "^17.0.1",
     "parseurl": "^1.3.3",
     "picodb": "^1.0.6",
