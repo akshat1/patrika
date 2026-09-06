@@ -1,6 +1,6 @@
 import path from "node:path";
 import { Worker } from "node:worker_threads";
-import { getLogger } from "@akshat1/js-logger";
+import { getLogger } from "@kabukisolutions/js-logger";
 import { getCommandLineOptions } from "./commandLineArgs.js";
 
 const logger = getLogger("build");
@@ -44,7 +44,6 @@ export const build = (): Promise<void> => {
     worker.on("error", (err) => {
       isBuilding = false;
       getLogger("worker.onError", logger).error("Error in the worker thread.", err);
-      console.error(err);  // @akshat1/js-logger seems to be swallowing the error if it happens to not be the first argument to logger.error. TMP workaround for now.
       process.exit(1);
     });
     worker.on("exit", () => {

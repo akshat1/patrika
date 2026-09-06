@@ -25,9 +25,9 @@ $ cd my-personal-website
 $ mkdir content                # All your markdown content goes into this directory
 $ mkdir src                    # Your template goes into this directory
 $ touch src/index.js
-$ echo "@akshat1:registry=https://npm.pkg.github.com" >> .npmrc
+$ echo "@kabukisolutions:registry=https://npm.pkg.github.com" >> .npmrc
 $ npm init
-$ npm i -D @akshat1/patrika
+$ npm i -D @kabukisolutions/patrika
 ```
 
 Patrika is published to the GitHub Packages npm registry, which requires authentication even for public packages. If the install fails with a 401, [create a GitHub personal access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages) with the `read:packages` scope and add it to your `~/.npmrc`:
@@ -47,7 +47,7 @@ $ npx patrika -t src/index.js
 ```ts
 // This is a TS example just to illustrate use of various interfaces from Patrika.
 // You are free to use JS, or any compile to JS language; just pass the compiled JS to patrika on the CLI.
-import { ContentItem, Patrika, Template, RunnerConfiguration } from "@akshat1/patrika";
+import { ContentItem, Patrika, Template, RunnerConfiguration } from "@kabukisolutions/patrika";
 import path from "node:path";
 import slugify from "slugify";
 import { renderToString } from "./renderer/index.js";
@@ -105,7 +105,7 @@ Here's a really simple TypeScript example.
 ```ts
 // src/renderer/index.ts, imported by the template above. Compile it alongside the template.
 import { renderHead } from "./head.js";
-import { ContentItem, Patrika } from "@akshat1/patrika";
+import { ContentItem, Patrika } from "@kabukisolutions/patrika";
 import { renderBody } from "./body.js";
 import { renderFooter } from "./footer.js";
 
@@ -125,7 +125,7 @@ export const renderToString = async (item: ContentItem, patrika: Patrika) =>
 `renderToString` may return an array of strings instead of a single string. When it does, Patrika writes one file per element and calls `getURLRelativeToRoot(item, pageNumber)` with the element's index (0, 1, 2, ...) to decide where each one goes. That is why the `getURLRelativeToRoot` example above accepts a `pageNumber` argument. For a single string, `getURLRelativeToRoot` is called without a page number.
 
 ```ts
-import { ContentItem, Patrika } from "@akshat1/patrika";
+import { ContentItem, Patrika } from "@kabukisolutions/patrika";
 
 // Render a list page in chunks of ten posts.
 export const renderToString = async (item: ContentItem, patrika: Patrika) => {
@@ -148,7 +148,7 @@ export const renderToString = async (item: ContentItem, patrika: Patrika) => {
 Every page Patrika writes is backed by a `ContentItem`. To produce pages that have no markdown file of their own, such as a page per tag, provide an optional `getExtraContentItems` function on the template (or in the `getPatrika` call). It receives the `Patrika` instance after all markdown files have been loaded (but before their markdown is rendered, so `body` is still `undefined` on every item at this point) and must return fully formed `ContentItem`s. `getSlug` is not called for these, so set `slug` yourself. They get inserted into the database and rendered like any other item, which means your `getURLRelativeToRoot` and `renderToString` functions must handle them too: the template example above keys on `frontMatter.type` and would throw for a `tag` item until you add a branch for it. The runner asks `getURLRelativeToRoot` where to write each item, so keep the `url` and `filePath` you set here consistent with it.
 
 ```ts
-import { ContentItem, Patrika } from "@akshat1/patrika";
+import { ContentItem, Patrika } from "@kabukisolutions/patrika";
 
 const getExtraContentItems = async (patrika: Patrika): Promise<ContentItem[]> => {
   const posts = await patrika.find({ type: "post" });
@@ -193,7 +193,7 @@ Here's a simple example of using Patrika as a headless CMS.
 import path from "node:path";
 import express from "express";
 import slugify from "slugify";
-import { getPatrika } from "@akshat1/patrika";
+import { getPatrika } from "@kabukisolutions/patrika";
 
 const getSlug = ({ sourceFilePath, title }) =>
   slugify(title ?? path.basename(sourceFilePath).replace(/\.md$/, "")).toLowerCase();
