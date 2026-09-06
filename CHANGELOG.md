@@ -13,6 +13,15 @@
 - Dropped `.npmrc` from the published `files` list. npm strips `.npmrc` when packing, and a
   dependency's own `.npmrc` is never consulted during a consumer's install, so the entry had
   no effect. Consumers configure the scope in their own `.npmrc`, as the README describes.
+- Fixed the test runner discovering each test twice. `tsc` compiles `src/**/*.test.ts` into
+  `lib/` alongside the sources, and the bare `node --test` then found both the TypeScript
+  originals and their compiled copies, so a run after a build reported 34 tests where a clean
+  checkout reported 17. The `test` script now passes an explicit, quoted `"src/**/*.test.ts"`
+  glob, which Node expands itself; `lib/` is never scanned. Test files are still compiled and
+  still ship inside the package, which keeps them type-checked by `npm run build`.
+- CI now type-checks. The workflow ran only ESLint and the test suite; ESLint does not check
+  types and `tsx` strips them without checking, so a genuine type error could pass CI green.
+  Added a build step, which type-checks sources and tests alike.
 
 # 0.9.0 - August 26, 2026
 - **Breaking**: Removed built-in LESS support. The `lessDir` property is gone from
