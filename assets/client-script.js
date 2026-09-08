@@ -1,7 +1,10 @@
 /* eslint-disable */
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Client script loaded");
-  const socket = new WebSocket("ws://localhost:$$__PORT__$$");
+  // Same host and port the page was loaded from, so a port mapping (Docker, a reverse proxy)
+  // between the browser and the server needs no configuration.
+  const scheme = location.protocol === "https:" ? "wss" : "ws";
+  const socket = new WebSocket(`${scheme}://${location.host}`);
   socket.addEventListener("open", () => {
     console.log("Connected to server");
   });

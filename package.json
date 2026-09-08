@@ -1,10 +1,11 @@
 {
   "name": "@kabukisolutions/patrika",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Patrika is a static site generator. It reads markdown files and generates a static website using a user supplied `renderToString(ContentItem, Patrika) => Promise<string | string[]>` function. Patrika is minimal and framework agnostic, meant to be used with your favorite front-end framework.",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "assets"
   ],
   "repository": "git@github.com:kabukisolutions/patrika.git",
   "author": "akshat1 <akshat.sh@gmail.com>",
