@@ -8,7 +8,6 @@ import parseurl from "parseurl";
 import { RunnerConfiguration } from "./RunnerConfiguration";
 
 let runnerConfig: RunnerConfiguration;
-let serverPort: number;
 
 let scriptTextAddition = "";
 const getClientScriptAddition = async (): Promise<string> => {
@@ -21,8 +20,7 @@ const getClientScriptAddition = async (): Promise<string> => {
   const clientScriptPath = path.join(__dirname, "../..", "assets", "client-script.js");
   try {
     scriptTextAddition =
-      `<script>${(await fs.readFile(clientScriptPath)).toString("utf-8")}</script></body>`
-        .replace("$$__PORT__$$", String(serverPort));
+      `<script>${(await fs.readFile(clientScriptPath)).toString("utf-8")}</script></body>`;
 
     return scriptTextAddition;
   } catch (err) {
@@ -146,7 +144,6 @@ type SignalReloadCB = () => void;
 export const startServer = async (conf: RunnerConfiguration, port: number): Promise<SignalReloadCB> => {
   const logger = getLogger("startServer");
   runnerConfig = conf;
-  serverPort = port;
   logger.info("Starting server...");
   // Build everything
   // Start the server
